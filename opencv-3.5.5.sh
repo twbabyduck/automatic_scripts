@@ -1,3 +1,7 @@
+# Save current working directory
+cwd=$(pwd)
+sudo apt -y update
+
 sudo apt -y remove x264 libx264-dev
 ## Install dependencies
 sudo apt -y install build-essential checkinstall cmake pkg-config yasm
@@ -29,11 +33,10 @@ sudo apt -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
 sudo apt-get -y install python-pip  
 sudo pip install numpy
 	
-cd ~/Library
+cd $cwd
 git clone https://github.com/opencv/opencv.git
 cd opencv
 git checkout -b v3.4.5 3.4.5
-cd ~/Library/opencv
 mkdir build
 cd build
     cmake \
