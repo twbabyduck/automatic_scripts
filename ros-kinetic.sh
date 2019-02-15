@@ -30,5 +30,6 @@ rosdep update
 
 ### Environment Setup
 ### make sure put at the first line in the bashrc
-echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib:/usr/lib/aarch64-linux-gnu" >> ~/.bashrc
+#echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib:/usr/lib/aarch64-linux-gnu" >> ~/.bashrc
+echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
