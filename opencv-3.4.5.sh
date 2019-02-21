@@ -41,7 +41,7 @@ mkdir build
 cd build
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_PREFIX=/usr/local \
         -DBUILD_PNG=OFF \
         -DBUILD_TIFF=OFF \
         -DBUILD_TBB=ON \
@@ -64,10 +64,7 @@ cd build
         -DWITH_OPENEXR=OFF \
         -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-10.0 \
         -DWITH_LAPACK=OFF \
-        -DCUDA_ARCH_BIN="6.1 6.2" \
-        -DCUDA_ARCH_PTX="" \
         -DINSTALL_C_EXAMPLES=ON \
         -DINSTALL_TESTS=ON \
         ../
-make
-sudo make install
+sudo make -j"$(nproc)" install
