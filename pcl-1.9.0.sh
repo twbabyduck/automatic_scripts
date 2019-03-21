@@ -12,5 +12,5 @@ git clone https://github.com/PointCloudLibrary/pcl.git
 cd pcl
 git checkout pcl-1.9.0
 mkdir build && cd build
-cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_CUDA=ON -DBUILD_GPU=ON ..
+cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_CUDA=ON -DBUILD_GPU=ON -DWITH_QHULL=ON ..
 sudo make -j"$(nproc)" install
