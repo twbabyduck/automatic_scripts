@@ -1,6 +1,6 @@
 # !/bin/bash
 # Install Robot Operating System (ROS)
-# Information from: http://wiki.ros.org/kinetic/Installation/Ubuntu
+# Information from: http://wiki.ros.org/melodic/Installation/Ubuntu
 
 ### Configure repositories
 sudo apt-add-repository universe
@@ -15,10 +15,10 @@ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31
 
 ### Installation
 sudo apt-get update
-sudo apt-get install ros-kinetic-ros-base -y
+sudo apt-get install ros-melodic-ros-base -y
 
 ### Add Specific Packages here
-# sudo apt-get install ros-kinetic-pcl-msgs
+# sudo apt-get install ros-melodic-pcl-msgs
 
 ### Certificates Issues
 # ERROR: cannot download default sources list from:  
@@ -32,5 +32,5 @@ sudo rosdep init
 rosdep update
 
 ### Environment Setup
-echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
