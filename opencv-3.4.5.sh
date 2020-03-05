@@ -1,5 +1,6 @@
+OPENCV_VERSION=3.4.9
+OPENCV_SOURCE_DIR=$HOME/Library
 # Save current working directory
-cwd=$(pwd)
 sudo apt -y update
 
 sudo apt -y remove x264 libx264-dev
@@ -16,7 +17,6 @@ sudo apt -y install libxine2-dev libv4l-dev
 cd /usr/include/linux
 sudo ln -s -f ../libv4l1-videodev.h videodev.h
  
-sudo apt -y install libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
 sudo apt -y install libgtk2.0-dev libtbb-dev qt5-default
 sudo apt -y install libatlas-base-dev
 sudo apt -y install libfaac-dev libmp3lame-dev libtheora-dev
@@ -24,19 +24,33 @@ sudo apt -y install libvorbis-dev libxvidcore-dev
 sudo apt -y install libopencore-amrnb-dev libopencore-amrwb-dev
 sudo apt -y install libavresample-dev
 sudo apt -y install x264 v4l-utils
- 
+
+# GL
+sudo apt -y install libgl1 libglvnd-dev
+
 # Optional dependencies
 sudo apt -y install libprotobuf-dev protobuf-compiler
 sudo apt -y install libgoogle-glog-dev libgflags-dev
 sudo apt -y install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
 
-sudo apt-get -y install python-pip  
-sudo pip install numpy
+# Python 2.7
+sudo apt-get install -y python-dev python-numpy python-py python-pytest
+
+# Python 3.6
+sudo apt-get install -y python3-dev python3-numpy python3-py python3-pytest
 	
-cd $cwd
+# GStreamer support
+sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev 
+
+cd $OPENCV_SOURCE_DIR
+git clone https://github.com/opencv/opencv_extra.git
+cd opencv_extra
+git checkout -b v${OPENCV_VERSION} ${OPENCV_VERSION}
+
+cd $OPENCV_SOURCE_DIR
 git clone https://github.com/opencv/opencv.git
 cd opencv
-git checkout -b v3.4.5 3.4.5
+git checkout -b v${OPENCV_VERSION} ${OPENCV_VERSION}
 mkdir build
 cd build
     cmake \
@@ -48,21 +62,26 @@ cd build
         -DBUILD_JPEG=OFF \
         -DBUILD_JASPER=OFF \
         -DBUILD_ZLIB=OFF \
+	-DENABLE_FAST_MATH=ON \
         -DBUILD_EXAMPLES=ON \
         -DBUILD_opencv_java=OFF \
-        -DBUILD_opencv_python2=ON \
-        -DBUILD_opencv_python3=OFF \
+        -DBUILD_opencv_python2=OFF \
+        -DBUILD_opencv_python3=ON \
         -DWITH_OPENCL=OFF \
         -DWITH_OPENMP=ON \
         -DWITH_FFMPEG=ON \
         -DWITH_GSTREAMER=ON \
-        -DWITH_GSTREAMER_0_10=ON \
+        -DWITH_GSTREAMER_0_10=OFF \
         -DWITH_CUDA=ON \
+	-DWITH_CUBLAS=ON \
         -DWITH_GTK=ON \
         -DWITH_VTK=OFF \
         -DWITH_1394=OFF \
         -DWITH_OPENEXR=OFF \
-        -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-10.0 \
+        -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-10 \
+	-DCUDA_NVCC_FLAGS="--expt-relaxed-constexpr" \
+	-DWITH_QT=ON \
+        -DWITH_OPENGL=ON \
         -DWITH_LAPACK=OFF \
         -DINSTALL_C_EXAMPLES=ON \
         -DINSTALL_TESTS=ON \

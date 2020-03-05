@@ -10,8 +10,9 @@ sudo apt-get -y install libvtk6-qt-dev
 ### Compile and Install PCL
 git clone https://github.com/PointCloudLibrary/pcl.git -b pcl-1.9.1
 cd pcl
+git apply ../pcl_cuda.patch
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_CUDA=ON -DBUILD_GPU=ON -DWITH_QHULL=ON ..
-sudo make -j"$(nproc)" install
+#sudo make -j"$(nproc)" install
 ## If you get `internal compiler error: Killed` then use the following command to decrease the number of jobs run in parallel.
-# sudo make -j$(($(nproc)-1)) install
+sudo make -j$(($(nproc)-1)) install
