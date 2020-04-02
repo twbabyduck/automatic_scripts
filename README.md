@@ -2,22 +2,14 @@
 
 ## Release Notes
 
-Feb 2019
-* CUDA 10.0
-* OpenCV 3.4.5
-* Point Cloud Library 1.9.0
-* ROS Kinetic Kame
-* NVIDIA Graphic Driver 410
-* NVIDIA Docker 2.0
 
-June 2019
-* Point Cloud Library 1.9.1
-* ROS Melodic Morenia
+April 2020
+* CUDA 10.2 (Ubuntu 18.04)
+* CUDA 10.0 (Ubuntu 18.04) + 2019 Update Patch
+* OpenCV 3.4.9
+* Point Cloud Library 1.9.1 (with cuda 10.2 patch) 
+* Eigen 3.3.7
+* Flann 1.9.1 (with cuda 10.2 patch)
+* ROS Melodic Morenia (Ubuntu 18.04)
+* NVIDIA Docker (Latest)
 
-
-## Notes
-
-Make sure you set the following path under ~/.bashrc on NVIDIA Platform
-```bash
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib:/usr/lib/aarch64-linux-gnu
-```
