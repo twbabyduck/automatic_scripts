@@ -27,6 +27,9 @@ sudo apt-get install ros-melodic-ros-base -y
 ###  
 # sudo c_rehash /etc/ssl/certs
 
+### Install bootstrap dependencies
+sudo apt-get install python-rosdep python-rosinstall-generator python-wstool python-rosinstall build-essential
+
 ### Initialize rosdep
 sudo rosdep init
 rosdep update
