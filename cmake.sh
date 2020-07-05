@@ -4,3 +4,4 @@ cd ~/cmake && \
 git checkout v3.17.0 && \
 ./bootstrap && \
 sudo make -j"$(nproc)" install
+rm -rf ~/cmake
