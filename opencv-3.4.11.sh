@@ -1,19 +1,17 @@
-OPENCV_VERSION=3.4.9
+OPENCV_VERSION=3.4.11
 OPENCV_SOURCE_DIR=$HOME/Library
 # Save current working directory
 sudo apt -y update
 
-sudo apt -y remove x264 libx264-dev
 ## Install dependencies
 sudo apt -y install build-essential checkinstall cmake pkg-config yasm
 sudo apt -y install git gfortran
-sudo apt -y install libjpeg8-dev libjasper-dev libpng12-dev
+sudo apt -y install libpng-dev
  
-sudo apt -y install libtiff5-dev
-sudo apt -y install libtiff-dev
+sudo apt -y install libtiff5-dev libtiff-dev
 
 sudo apt -y install libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev
-sudo apt -y install libxine2-dev libv4l-dev
+sudo apt -y install libxine2-dev libv4l-dev v4l-utils qv4l2 v4l2ucp
 cd /usr/include/linux
 sudo ln -s -f ../libv4l1-videodev.h videodev.h
  
@@ -23,9 +21,9 @@ sudo apt -y install libfaac-dev libmp3lame-dev libtheora-dev
 sudo apt -y install libvorbis-dev libxvidcore-dev
 sudo apt -y install libopencore-amrnb-dev libopencore-amrwb-dev
 sudo apt -y install libavresample-dev
-sudo apt -y install x264 v4l-utils
+sudo apt -y install x264 libx264-dev
 
-# GL
+# GL (Jetson need patch)
 sudo apt -y install libgl1 libglvnd-dev
 
 # Optional dependencies
@@ -48,9 +46,15 @@ cd opencv_extra
 git checkout -b v${OPENCV_VERSION} ${OPENCV_VERSION}
 
 cd $OPENCV_SOURCE_DIR
+git clone https://github.com/opencv/opencv_contrib.git
+cd opencv_contrib
+git checkout -b v${OPENCV_VERSION} ${OPENCV_VERSION}
+
+cd $OPENCV_SOURCE_DIR
 git clone https://github.com/opencv/opencv.git
 cd opencv
 git checkout -b v${OPENCV_VERSION} ${OPENCV_VERSION}
+
 mkdir build
 cd build
     cmake \
@@ -78,12 +82,14 @@ cd build
         -DWITH_VTK=OFF \
         -DWITH_1394=OFF \
         -DWITH_OPENEXR=OFF \
-        -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-10 \
+        -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda \
 	-DCUDA_NVCC_FLAGS="--expt-relaxed-constexpr" \
 	-DWITH_QT=ON \
         -DWITH_OPENGL=ON \
         -DWITH_LAPACK=OFF \
         -DINSTALL_C_EXAMPLES=ON \
         -DINSTALL_TESTS=ON \
+        -DOPENCV_EXTRA_MODULES_PATH=$OPENCV_SOURCE_DIR/opencv_contrib/modules \
+        -DOPENCV_TEST_DATA_PATH=$OPENCV_SOURCE_DIR/opencv_extra/testdata \
         ../
 sudo make -j"$(nproc)" install
